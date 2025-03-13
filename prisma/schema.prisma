@@ -12,3 +12,145 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Depoimentos {
+  id          Int @id @default(autoincrement())
+  pacienteID  Int @unique
+  nome        String
+  local       String
+  texto       String
+  dataEnvio   DateTime @default(now())
+
+  paciente    Paciente @relation(fields: [pacienteID], references: [id])
+}
+
+model Atendimento {
+  id             Int @id @default(autoincrement())
+  profissionalID Int 
+  pacienteID     Int
+  data           DateTime @default(now())
+  horario        DateTime @default(now())
+  status         String
+
+  paciente       Paciente  @relation(fields: [pacienteID], references: [id])
+  profissional   Profissional @relation(fields: [profissionalID], references: [id])
+}
+
+model GruposApoio {
+  id             Int @id @default(autoincrement())
+  profissionalID Int
+  tipo           String
+  descricao      String
+  local          String
+
+  profissional   Profissional @relation(fields: [profissionalID], references: [id])
+}
+
+model Usuario {
+  id         Int @id @default(autoincrement())
+  nomeUsario String
+  email      String @unique
+  senha      String
+  tipo       UsuarioTipo @default(paciente)
+
+  paciente    Paciente? @relation
+  profissional Profissional? @relation
+}
+
+enum UsuarioTipo {
+  admin
+  paciente
+  profissional
+}
+
+model Profissional {
+  id                Int @id @default(autoincrement())
+  usuarioID         Int @unique
+  nomeCompleto      String
+  matricula         String @unique
+  genero            String
+  bio               String
+  formacoes         String
+  especialidade     Especialidades[]
+  faixaEtaria       FaixaEtaria
+  preco             Int
+  regiao            String
+  foto              String
+  diasAtendimento   DiasAtendimento[]
+  atendimentos      Atendimento[]
+
+  gruposApoio       GruposApoio[]
+  usuario           Usuario @relation(fields: [usuarioID], references: [id], onDelete: Cascade)
+  evolucoesClinicas EvolucaoClinica[]
+}
+
+enum Especialidades {
+  ansiedade
+  depressao
+  fobias
+  autoconhecimento
+  autoestima
+  borderline
+  bulimia
+  cancer
+  transtornos
+  compulsoes 
+  dislexia
+  disturbios
+  drogas
+  esquizofrenia
+  estressa
+  hiperatividade
+  hipocondria
+  obesidade
+  burnout
+  sexualidade
+  suicídio
+}
+
+enum FaixaEtaria {
+  criancas
+  adolescentes
+  adultos
+  idosos
+  casais
+}
+
+enum DiasAtendimento {
+  domingo
+  segunda_feira
+  terca_feira
+  quarta_feira
+  quinta_feira
+  sexta_feira
+  sabado
+}
+
+model Paciente {
+  id                Int @id @default(autoincrement())
+  usuarioID         Int @unique
+  nomeCompleto      String
+  genero            String
+  idade             Int
+  principaisQueixas String
+  usoDeMedicamentos String
+  objetivoDaTerapia String
+  historicoFamiliar String
+  atendimentos      Atendimento[]
+
+  depoimentos       Depoimentos?
+  usuario           Usuario @relation(fields: [usuarioID], references: [id], onDelete: Cascade)
+  evolucoesClinicas EvolucaoClinica[]
+}
+
+model EvolucaoClinica {
+  id                  Int @id @default(autoincrement())
+  pacienteID          Int @unique
+  profissionalID      Int @unique
+  relatoAtendimento   String
+  ajustesNoTratamento String
+  data                DateTime @default(now())
+
+  paciente            Paciente  @relation(fields: [pacienteID], references: [id])
+  profissional        Profissional @relation(fields: [profissionalID], references: [id])
+}
