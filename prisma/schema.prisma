@@ -51,16 +51,16 @@ model Usuario {
   nomeUsario String
   email      String @unique
   senha      String
-  tipo       UsuarioTipo @default(paciente)
+  tipo       UsuarioTipo @default(PACIENTE)
 
   paciente    Paciente? @relation
   profissional Profissional? @relation
 }
 
 enum UsuarioTipo {
-  admin
-  paciente
-  profissional
+  ADMIN
+  PACIENTE
+  PROFISSIONAL
 }
 
 model Profissional {
@@ -85,45 +85,45 @@ model Profissional {
 }
 
 enum Especialidades {
-  ansiedade
-  depressao
-  fobias
-  autoconhecimento
-  autoestima
-  borderline
-  bulimia
-  cancer
-  transtornos
-  compulsoes 
-  dislexia
-  disturbios
-  drogas
-  esquizofrenia
-  estressa
-  hiperatividade
-  hipocondria
-  obesidade
-  burnout
-  sexualidade
-  suicídio
+  ANSIEDADE
+  DEPRESSAO
+  FOBIAS
+  AUTOCONHECIMENTO
+  AUTOESTIMA
+  BORDERLINE
+  BULIMIA
+  CANCER
+  TRANSTORNOS
+  COMPULSOES
+  DISLEXIA
+  DISTURBIOS
+  DROGAS
+  ESQUIZOFRENIA
+  ESTRESSA
+  HIPERATIVIDADE
+  HIPOCONDRIA
+  OBESIDADE
+  BURNOUT
+  SEXUALIDADE
+  SUICIDIO
 }
 
 enum FaixaEtaria {
-  criancas
-  adolescentes
-  adultos
-  idosos
-  casais
+  CRIANCAS
+  ADOLESCENTES
+  ADULTOS
+  IDOSOS
+  CASAIS
 }
 
 enum DiasAtendimento {
-  domingo
-  segunda_feira
-  terca_feira
-  quarta_feira
-  quinta_feira
-  sexta_feira
-  sabado
+  DOMINGO
+  SEGUNDA
+  TERCA
+  QUARTA
+  QUINTA
+  SEXTA
+  SABADO
 }
 
 model Paciente {
