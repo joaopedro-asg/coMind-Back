@@ -1,7 +1,11 @@
 const express = require("express");
-const paciente = require("../controllers/pacienteController");
+const Paciente = require("../controllers/pacienteController");
 const router = express.Router();
 
-router.get("/", paciente.listarPacientes);
+router.get("/", Paciente.listarPacientes);
+router.get("/:id", Paciente.buscarPacientesPorId);
+router.post("/", Paciente.criarPacientes);
+router.put("/:id", Paciente.atualizarPacientes);
+router.delete("/:id", Paciente.excluirPacientes);
 
 module.exports = router;
