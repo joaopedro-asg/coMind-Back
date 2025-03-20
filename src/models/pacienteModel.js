@@ -33,10 +33,10 @@ const criarPacientes = async (nomeCompleto, genero, idade, principaisQueixas, us
 
 const atualizarPacietes = async (id, { nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos }) => {
     const paciente = await prisma.Paciente.findUnique({
-        wher: { id }
+        where: { id }
     });
     if (!paciente) {
-        throw new Error('Paciente não encontrado...');
+        throw new Error('Paciente não atualizado...');
     };
     return await prisma.Paciente.update({
         where: { id },
@@ -46,10 +46,10 @@ const atualizarPacietes = async (id, { nomeCompleto, genero, idade, principaisQu
 
 const excluirPaciente = async (id) => {
     const paciente = await prisma.Paciente.findUnique({
-        wher: { id }
+        where: { id }
     });
-    if (!treino) {
-        throw new Error('Paciente não encontrado...');
+    if (!paciente) {
+        throw new Error('Paciente não excluído...');
     };
 
     await prisma.Paciente.delete({
