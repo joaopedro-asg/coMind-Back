@@ -9,7 +9,7 @@ exports.listarPacientes = async(req, res) => {
     };
 };
 
-exports.buscarPacientesPorId = async (req, res) => {
+exports.buscarPacientePorId = async (req, res) => {
     try {
         const { id } = req.params;
         const paciente = await Paciente.buscarPacientePorId(Number(id));
@@ -45,10 +45,10 @@ exports.atualizarPacientes = async (req, res) => {
     };
 };
 
-exports.excluirPacientes = async (req, res) => {
+exports.excluirPaciente = async (req, res) => {
     try {
         const { id } = req.params;
-        await Paciente.excluirPacientes(Number(id));
+        await Paciente.excluirPaciente(Number(id));
         res.status(204).send();
     } catch (error) {
         res.status(500).json({error: error.message || "Erro na hora de excluir!"});
