@@ -1,14 +1,12 @@
-import { Router } from "express";
-import UsersController from "../controllers/UsersController.js";
-import { verificarAutenticacao, verificarAdmin } from "../middlewares/authMiddleware.js";
+const express = require('express');
+const router = express.Router();
+const userController = require('../controllers/userController');
 
-const usersRoutes = Router();
-const usersController = new UsersController();
+router.get('/', userController.listarUsuario);
+router.get('/:id', userController.buscarUsuarioPorId);
+router.get('/email/:email', userController.buscarUsuarioPorEmail);
+router.post('/', userController.criarUsuario);
+router.put('/:id', userController.atualizarUsuario);
+router.delete('/:id', userController.excluirUsuario);
 
-usersRoutes.post('/login', usersController.login);
-usersRoutes.post('/register', usersController.createUser);
-usersRoutes.get('/:id', verificarAutenticacao, usersController.findUserById);  
-usersRoutes.get('/:id', verificarAdmin, usersController.findUserById);  
-usersRoutes.get("/", usersController.getAllUsers);
-
-export { usersRoutes };
+module.exports = router;
