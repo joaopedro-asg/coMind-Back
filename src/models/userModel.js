@@ -1,10 +1,10 @@
 const prisma = require('../prisma');
 
-const listarUsuario = async () => {
+exports.listarUsuario = async () => {
     return await prisma.usuario.findMany();
 }
 
-const buscarUsuarioPorId = async (id) => {
+exports.buscarUsuarioPorId = async (id) => {
     const usuario = await prisma.usuario.findUnique({
         where: {id}
     });
@@ -15,17 +15,17 @@ const buscarUsuarioPorId = async (id) => {
     return usuario;
 };
 
-const buscarUsuarioPorEmail = async (email) => {
+exports.buscarUsuarioPorEmail = async (email) => {
     const usuario = await prisma.usuario.findUnique({
         where: {email}
     });
     return usuario;
 };
 
-const criarUsuario = async ({nome_usuario, email, senha, tipo}) => {
+exports.criarUsuario = async ({nomeusario, email, senha, tipo}) => {
     return await prisma.usuario.create({
         data: {
-            nome_usuario,
+            nomeusario,
             email,
             senha,
             tipo,
@@ -33,7 +33,7 @@ const criarUsuario = async ({nome_usuario, email, senha, tipo}) => {
     });
 };
 
-const atualizarUsuario = async (id, {nome_usuario, email, senha, tipo}) => {
+exports.atualizarUsuario = async (id, {nomeusario, email, senha, tipo}) => {
     const usuario = await prisma.usuario.findUnique({
         where: {id},
     });
@@ -45,7 +45,7 @@ const atualizarUsuario = async (id, {nome_usuario, email, senha, tipo}) => {
     return await prisma.usuario.update({
         where: {id},
         data: {
-            nome_usuario,
+            nomeusario,
             email,
             senha,
             tipo
@@ -53,7 +53,7 @@ const atualizarUsuario = async (id, {nome_usuario, email, senha, tipo}) => {
     });
 };
 
-const excluirUsuario = async (id) => {
+exports.excluirUsuario = async (id) => {
     const usuario = await prisma.usuario.findUnique({
         where: {id},
     });
@@ -65,13 +65,4 @@ const excluirUsuario = async (id) => {
     await prisma.usuario.delete({
         where: {id},
     });
-};
-
-module.exports = {
-    listarUsuario,
-    buscarUsuarioPorId,
-    buscarUsuarioPorEmail,
-    criarUsuario,
-    atualizarUsuario,
-    excluirUsuario,
 };
