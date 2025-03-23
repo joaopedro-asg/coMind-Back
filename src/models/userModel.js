@@ -1,10 +1,9 @@
-const prisma = require('../prisma');
-
-exports.listarUsuario = async () => {
+//MARK: - Consulta com prisma
+export const listarUsuario = async () => {
     return await prisma.usuario.findMany();
 }
 
-exports.buscarUsuarioPorId = async (id) => {
+export const buscarUsuarioPorId = async (id) => {
     const usuario = await prisma.usuario.findUnique({
         where: {id}
     });
@@ -15,14 +14,14 @@ exports.buscarUsuarioPorId = async (id) => {
     return usuario;
 };
 
-exports.buscarUsuarioPorEmail = async (email) => {
+export const buscarUsuarioPorEmail = async (email) => {
     const usuario = await prisma.usuario.findUnique({
         where: {email}
     });
     return usuario;
 };
 
-exports.criarUsuario = async ({nomeusario, email, senha, tipo}) => {
+export const criarUsuario = async ({nomeusario, email, senha, tipo}) => {
     return await prisma.usuario.create({
         data: {
             nomeusario,
@@ -33,7 +32,7 @@ exports.criarUsuario = async ({nomeusario, email, senha, tipo}) => {
     });
 };
 
-exports.atualizarUsuario = async (id, {nomeusario, email, senha, tipo}) => {
+export const atualizarUsuario = async (id, {nomeusario, email, senha, tipo}) => {
     const usuario = await prisma.usuario.findUnique({
         where: {id},
     });
@@ -53,7 +52,7 @@ exports.atualizarUsuario = async (id, {nomeusario, email, senha, tipo}) => {
     });
 };
 
-exports.excluirUsuario = async (id) => {
+export const excluirUsuario = async (id) => {
     const usuario = await prisma.usuario.findUnique({
         where: {id},
     });

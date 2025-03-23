@@ -1,36 +1,46 @@
 import jwt from "jsonwebtoken";
-import { secret } from "../config/jwt.js";
 
-// Verifica se é do tipo PACIENTE / PROFISSIONAL
-export const verificarAutenticacao = (req, res, next) => {
-  if (req.path === "/api/users/login") {
-    return next(); 
-  }
-
-  const token = req.headers.authorization;
-
-  if (!token) {
-    return res
-      .status(403)
-      .json({ message: "Acesso negado. Token não fornecido." });
-  }
-
+export const authenticate = (req, res, next) => {
   try {
-   
-    const decoded = jwt.verify(token, secret);
-    req.user = decoded.data; 
+    const authHeader = req.header("Authorization");
+    
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ error: "Acesso negado: Token não fornecido ou inválido" });
+    }
+
+    const token = authHeader.replace("Bearer ", "");
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+
+    req.user = verified;
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Token inválido." });
+    return res.status(403).json({ error: "Token inválido ou expirado" });
   }
 };
 
-// Verifica se é do tipo ADMIN
 export const verificarAdmin = (req, res, next) => {
-  if (!req.user || req.user.tipo !== "ADMIN") {
-    return res
-      .status(403)
-      .json({ message: "Acesso restrito a administradores." });
-  }
-  next();
+    if (!req.user || req.user.userType !== "ADMIN") {
+        return res
+            .status(403)
+            .json({ message: "Acesso restrito a administradores." });
+    }
+    next();
+};
+
+export const verificarProfissional = (req, res, next) => {
+    if (!req.user || req.user.userType !== "PROFISSIONAL") {
+        return res
+            .status(403)
+            .json({ message: "Acesso restrito a profissionais." });
+    }
+    next();
+};
+
+export const verificarPaciente = (req, res, next) => {
+    if (!req.user || req.user.userType !== "PACIENTE") {
+        return res
+            .status(403)
+            .json({ message: "Acesso restrito a pacientes." });
+    }
+    next();
 };
