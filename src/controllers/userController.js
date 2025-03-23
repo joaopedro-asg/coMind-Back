@@ -1,7 +1,7 @@
-const user = require('../models/userModel');
+import '../models/userModel.js';
 
 //MARK: - CRUD
-exports.listarUsuario = async (req, res) => {
+export const listarUsuario = async (req, res) => {
     try {
         const usuarios = await user.listarUsuario();
         res.json(usuarios);
@@ -12,7 +12,7 @@ exports.listarUsuario = async (req, res) => {
     }
 };
 
-exports.buscarUsuarioPorId = async (req, res) => {
+export const buscarUsuarioPorId = async (req, res) => {
     try {
         const { id } = req.params;
         const usuario = await user.buscarUsuarioPorId(Number(id));
@@ -24,7 +24,7 @@ exports.buscarUsuarioPorId = async (req, res) => {
     }
 };
 
-exports.buscarUsuarioPorEmail = async (req, res) => {
+export const buscarUsuarioPorEmail = async (req, res) => {
     try {
         const { email } = req.params;
         const usuario = await user.buscarUsuarioPorEmail(email);
@@ -37,7 +37,7 @@ exports.buscarUsuarioPorEmail = async (req, res) => {
 };
 
 //CREATE
-exports.criarUsuario = async (req, res) => {
+export const criarUsuario = async (req, res) => {
     try {
         const { nomeusario, email, senha, tipo } = req.body;
 
@@ -69,7 +69,7 @@ exports.criarUsuario = async (req, res) => {
 };
 
 //UPDATE/PUT
-exports.atualizarUsuario = async (req, res) => {
+export const atualizarUsuario = async (req, res) => {
     try {
         const { id } = req.params;
         const { nomeusario, email, senha, tipo } = req.body;
@@ -94,7 +94,7 @@ exports.atualizarUsuario = async (req, res) => {
 };
 
 //DELETE
-exports.excluirUsuario = async (req, res) => {
+export const excluirUsuario = async (req, res) => {
     try {
         const { id } = req.params;
         await user.excluirUsuario(Number(id));
