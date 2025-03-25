@@ -1,13 +1,11 @@
 const express = require("express");
 const app = express();
 const pacienteRoutes = require("./routes/pacienteRoutes");
-const atendimentoRoutes = require("./routes/atendimentoRoutes");
-const evolucaoClinicaRoutes = require("./routes/evolucaoClinicaRoutes");
+const depoimentosRoutes = require("./routes/depoimentosRoutes")
 
 app.use(express.json());
 app.use("/paciente", pacienteRoutes);
-app.use("/evolucaoClinica", evolucaoClinicaRoutes);
-app.use("/atendimento", atendimentoRoutes);
+app.use("/depoimentos", depoimentosRoutes);
 
 
 module.exports = app;
