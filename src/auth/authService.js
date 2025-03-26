@@ -10,6 +10,7 @@ export const generateToken = (user) => {
   );
 };
 
+//MARK: - Registro
 export const registrarUsuario = async (nome, email, senha, tipo) => {
   console.log('Verificando usuário existente...');
   const usuarioExistente = await prisma.usuario.findUnique({
@@ -37,25 +38,41 @@ export const registrarUsuario = async (nome, email, senha, tipo) => {
   return novoUsuario;
 };
 
-export const autenticarUsuario = async (email, senha) => {
-  const usuario = await prisma.usuario.findUnique({
-    where: { email },
-  });
+//MARK: - Autenticar
+export const autenticarUsuario = async (req, res) => {
+  try {
+    const { email, senha } = req.body;
 
-  if (!usuario) {
-    throw new Error("Usuário não encontrado.");
+    const usuario = await prisma.usuario.findUnique({
+      where: { email },
+    });
+
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuário não encontrado." });
+    }
+
+    const senhaValida = await bcrypt.compare(senha, usuario.senha);
+    if (!senhaValida) {
+      return res.status(401).json({ error: "Senha incorreta." });
+    }
+
+    const token = jwt.sign(
+      { id: usuario.id, name: usuario.nomeUsario, tipo: usuario.tipo },
+      process.env.JWT_SECRET,
+      { expiresIn: '2h' }
+    );
+
+    return res.status(200).json({ 
+      token,
+      tipoUsuario: usuario.tipo,
+      usuario: {
+        id: usuario.id,
+        nome: usuario.nomeUsario
+      }
+    });
+
+  } catch (error) {
+    console.error("Erro na autenticação:", error);
+    return res.status(500).json({ error: "Erro interno no servidor." });
   }
-
-  const senhaValida = await bcrypt.compare(senha, usuario.senha);
-  if (!senhaValida) {
-    throw new Error("Senha incorreta.");
-  }
-
-  const token = jwt.sign(
-    { id: usuario.id, name: usuario.nomeUsario, tipo: usuario.tipo },
-    process.env.JWT_SECRET,
-    { expiresIn: '2h' }
-  );
-
-  return token;
 };
