@@ -72,7 +72,7 @@ model Profissional {
   bio               String
   formacoes         String
   especialidade     Especialidades[]
-  faixaEtaria       FaixaEtaria
+  faixaEtaria       FaixaEtaria[]
   preco             Int
   regiao            String
   foto              String
