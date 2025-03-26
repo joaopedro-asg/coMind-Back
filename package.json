@@ -11,7 +11,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Este repositório contém a parte de back-end da aplicação coMind.",
   "dependencies": {
     "@prisma/client": "^6.5.0",
     "axios": "^1.8.4",
