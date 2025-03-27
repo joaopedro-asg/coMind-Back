@@ -1,25 +1,53 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from '../prisma.js'
 
-const prisma = new PrismaClient();
+export const listarEvolucaoClinica = async () => {
+    return await prisma.evolucaoClinica.findMany();
+};
 
-export const EvolucaoClinica = {
-    create: async (data) => {
-        return await prisma.evolucaoClinica.create({data});
-    },
+export const buscarEvolucaoClinicaPorId = async (id) => {
+    const evolucaoClinica = await prisma.evolucaoClinica.findUnique({
+        where: { id }
+    });
+    if (!evolucaoClinica) {
+        throw new Error('Evolução Clínica não encontrada...');
+    };
+    return evolucaoClinica;
+};
 
-    findAll: async () => {
-        return await prisma.evolucaoClinica.findMany();
-    },
+export const criarEvolucaoClinica = async (pacienteID, profissionalID, relatoAtendimento, ajustesNoTratamento) => {
+    return await prisma.evolucaoClinica.create({
+        data:
+        {
+            pacienteID, 
+            profissionalID, 
+            relatoAtendimento, 
+            ajustesNoTratamento 
+        }
+    });
+};
 
-    findById: async (id) => {
-        return await prisma.evolucaoClinica.findUnique({ where: {id}});
-    },
+export const atualizarEvolucaoClinica = async (id, { pacienteID, profissionalID, relatoAtendimento, ajustesNoTratamento }) => {
+    const evolucaoClinica = await prisma.evolucaoClinica.findUnique({
+        where: { id }
+    });
+    if (!evolucaoClinica) {
+        throw new Error('Evolução Clínica não atualizado...');
+    };
+    return await prisma.evolucaoClinica.update({
+        where: { id },
+        data: { pacienteID, profissionalID, relatoAtendimento, ajustesNoTratamento }
+    });
+};
 
-    update: async (id, data) => {
-        return await prisma.evolucaoClinica.update({ where: {id}, data,});
-    },
+export const excluirEvolucaoClinica = async (id) => {
+    const evolucaoClinica = await prisma.evolucaoClinica.findUnique({
+        where: { id }
+    });
+    if (!evolucaoClinica) {
+        throw new Error('Evolução Clínica não excluída...');
+    };
 
-    delete: async (id) => {
-        return await prisma.evolucaoClinica.delete({ where: {id}});
-    },
+    await prisma.evolucaoClinica.delete({
+        where: { id }
+    });
 };
