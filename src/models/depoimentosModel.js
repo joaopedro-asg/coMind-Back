@@ -1,3 +1,4 @@
+import prisma from '../prisma.js';
 
 export const listarDepoimentos = async () => {
     return await prisma.Depoimento.findMany();
