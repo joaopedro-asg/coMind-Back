@@ -5,7 +5,7 @@ export const listarGruposApoio = async(req, res) => {
         const gruposApoio = await GruposApoio.listarGruposApoio();
         req.status(200).json(gruposApoio);
     } catch (error) {
-        res.status(500).json({erro: erro.message || "Erro na hora de listar!"});
+        res.status(500).json({erro: error.message || "Erro na hora de listar!"});
     };
 };
 
