@@ -14,10 +14,11 @@ export const buscarProfissionalPorId = async (id) => {
     return profissional;
 };
 
-export const criarProfissional = async (nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos) => {
+export const criarProfissional = async (usuarioID, nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos, atendimentos, evolucoesClinicas, gruposApoio) => {
     return await prisma.profissional.create({
         data:
         {
+            usuarioID,
             nomeCompleto, 
             matricula, 
             genero, 
@@ -29,12 +30,15 @@ export const criarProfissional = async (nomeCompleto, matricula, genero, bio, fo
             regiao, 
             foto, 
             diasAtendimento, 
-            quantAtendimentosGratuitos 
+            quantAtendimentosGratuitos,
+            atendimentos,
+            evolucoesClinicas,
+            gruposApoio
         }
     });
 };
 
-export const atualizarProfissional = async (id, { nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos }) => {
+export const atualizarProfissional = async (id, { usuarioID, nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos, atendimentos, evolucoesClinicas, gruposApoio }) => {
     const profissional = await prisma.profissional.findUnique({
         where: { id }
     });
@@ -43,7 +47,7 @@ export const atualizarProfissional = async (id, { nomeCompleto, matricula, gener
     };
     return await prisma.profissional.update({
         where: { id },
-        data: { nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos }
+        data: { usuarioID, nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos, atendimentos, evolucoesClinicas, gruposApoio }
     });
 };
 

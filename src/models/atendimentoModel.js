@@ -14,16 +14,18 @@ export const buscarAtendimentosPorId = async (id) => {
     return gruposApoio;
 };
 
-export const criarAtendimentos = async (status) => {
+export const criarAtendimentos = async (profissionalID, pacienteID, status) => {
     return await prisma.atendimento.create({
         data:
         {
+            profissionalID,
+            pacienteID,
             status 
         }
     });
 };
 
-export const atualizarAtendimentos = async (id, { status }) => {
+export const atualizarAtendimentos = async (id, { profissionalID, pacienteID, status }) => {
     const atendimentos = await prisma.atendimento.findUnique({
         where: { id }
     });
@@ -32,7 +34,7 @@ export const atualizarAtendimentos = async (id, { status }) => {
     };
     return await prisma.Atendimentos.update({
         where: { id },
-        data: { status }
+        data: { profissionalID, pacienteID, status }
     });
 };
 

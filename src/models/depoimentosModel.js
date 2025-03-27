@@ -14,10 +14,11 @@ export const buscarDepoimentosPorId = async (id) => {
     return depoimento;
 };
 
-export const criarDepoimentos = async (nome, local, texto) => {
+export const criarDepoimentos = async (pacienteID, nome, local, texto) => {
     return await prisma.depoimentos.create({
         data:
         {
+            pacienteID,
             nome, 
             local, 
             texto  
@@ -25,7 +26,7 @@ export const criarDepoimentos = async (nome, local, texto) => {
     });
 };
 
-export const atualizarDepoimentos = async (id, { nome, local, texto }) => {
+export const atualizarDepoimentos = async (id, { pacienteID, nome, local, texto }) => {
     const depoimento = await prisma.depoimentos.findUnique({
         where: { id }
     });
@@ -34,7 +35,7 @@ export const atualizarDepoimentos = async (id, { nome, local, texto }) => {
     };
     return await prisma.depoimentos.update({
         where: { id },
-        data: { nome, local, texto }
+        data: { pacienteID, nome, local, texto }
     });
 };
 

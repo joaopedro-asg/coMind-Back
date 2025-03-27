@@ -3,7 +3,7 @@ import * as Depoimento from '../models/depoimentosModel.js';
 export const listarDepoimentos = async(req, res) => {
     try {
         const depoimentos = await Depoimento.listarDepoimentos();
-        req.status(200).json(depoimentos);
+        res.status(200).json(depoimentos);
     } catch (error) {
         res.status(500).json({erro: error.message || "Erro na hora de listar!"});
     };
@@ -21,8 +21,8 @@ export const buscarDepoimentosPorId = async (req, res) => {
 
 export const criarDepoimentos = async(req, res) => {
     try {
-        const { nome, local, texto } = req.body;
-        const novoDepoimento = await Depoimento.criarDepoimentos(nome, local, texto);
+        const { pacienteID, nome, local, texto } = req.body;
+        const novoDepoimento = await Depoimento.criarDepoimentos(pacienteID, nome, local, texto);
         res.status(201).json(novoDepoimento);
     } catch (erro) {
         res.status(500).json({error: erro.message || "Erro na hora de criar!"});
@@ -32,13 +32,13 @@ export const criarDepoimentos = async(req, res) => {
 export const atualizarDepoimentos = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nome, local, texto } = req.body;
+        const { pacienteID, nome, local, texto } = req.body;
 
         if (!local || !texto) {
             return res.status(400).json({ error: "Campos obrigatórios não preenchidos."})
         };
 
-        const depoimentoAtualizado = await Depoimento.atualizarDepoimentos(Number(id), { nome, local, texto });
+        const depoimentoAtualizado = await Depoimento.atualizarDepoimentos(Number(id), { pacienteID, nome, local, texto });
         res.status(201).json(depoimentoAtualizado);
     } catch (error) {
         res.status(500).json({error: error.message || "Erro na hora de atualizar!"});

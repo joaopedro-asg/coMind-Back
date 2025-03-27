@@ -3,7 +3,7 @@ import * as GruposApoio from '../models/gruposApoioModel.js';
 export const listarGruposApoio = async(req, res) => {
     try {
         const gruposApoio = await GruposApoio.listarGruposApoio();
-        req.status(200).json(gruposApoio);
+        res.status(200).json(gruposApoio);
     } catch (error) {
         res.status(500).json({erro: error.message || "Erro na hora de listar!"});
     };
@@ -21,8 +21,8 @@ export const buscarGruposApoioPorId = async (req, res) => {
 
 export const criarGruposApoio = async(req, res) => {
     try {
-        const { tipo, descricao, local } = req.body;
-        const novoGruposApoio = await GruposApoio.criarGruposApoio(tipo, descricao, local);
+        const { profissionalID, tipo, descricao, local } = req.body;
+        const novoGruposApoio = await GruposApoio.criarGruposApoio(profissionalID, tipo, descricao, local);
         res.status(201).json(novoGruposApoio);
     } catch (erro) {
         res.status(500).json({error: erro.message || "Erro na hora de criar!"});
@@ -32,13 +32,13 @@ export const criarGruposApoio = async(req, res) => {
 export const atualizarGruposApoio = async (req, res) => {
     try {
         const { id } = req.params;
-        const { tipo, descricao, local } = req.body;
+        const { profissionalID, tipo, descricao, local } = req.body;
 
         if (!tipo || !descricao || !local) {
             return res.status(400).json({ error: "Campos obrigatórios não preenchidos."})
         };
 
-        const gruposApoioAtualizado = await GruposApoio.atualizarGruposApoio(Number(id), { tipo, descricao, local });
+        const gruposApoioAtualizado = await GruposApoio.atualizarGruposApoio(Number(id), { profissionalID, tipo, descricao, local });
         res.status(201).json(gruposApoioAtualizado);
     } catch (error) {
         res.status(500).json({error: error.message || "Erro na hora de atualizar!"});

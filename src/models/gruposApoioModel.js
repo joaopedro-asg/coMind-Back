@@ -14,10 +14,11 @@ export const buscarGruposApoioPorId = async (id) => {
     return gruposApoio;
 };
 
-export const criarGruposApoio = async (tipo, descricao, local) => {
+export const criarGruposApoio = async (profissionalID, tipo, descricao, local) => {
     return await prisma.gruposApoio.create({
         data:
         {
+            profissionalID,
             tipo,
             descricao,
             local 
@@ -25,7 +26,7 @@ export const criarGruposApoio = async (tipo, descricao, local) => {
     });
 };
 
-export const atualizarGruposApoio = async (id, { tipo, descricao, local }) => {
+export const atualizarGruposApoio = async (id, { profissionalID, tipo, descricao, local }) => {
     const gruposApoio = await prisma.gruposApoio.findUnique({
         where: { id }
     });
@@ -34,7 +35,7 @@ export const atualizarGruposApoio = async (id, { tipo, descricao, local }) => {
     };
     return await prisma.gruposApoio.update({
         where: { id },
-        data: { tipo, descricao, local }
+        data: { profissionalID, tipo, descricao, local }
     });
 };
 

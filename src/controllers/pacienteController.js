@@ -21,8 +21,8 @@ export const buscarPacientesPorId = async (req, res) => {
 
 export const criarPacientes = async(req, res) => {
     try {
-        const { usuarioID, nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos } = req.body;
-        const novoPaciente = await Paciente.criarPacientes(usuarioID, nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos);
+        const { usuarioID, nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, evolucoesClinicas, depoimentos } = req.body;
+        const novoPaciente = await Paciente.criarPacientes(usuarioID, nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, evolucoesClinicas, depoimentos);
         res.status(201).json(novoPaciente);
     } catch (erro) {
         res.status(500).json({error: erro.message || "Erro na hora de criar!"});
@@ -32,13 +32,13 @@ export const criarPacientes = async(req, res) => {
 export const atualizarPacientes = async (req, res) => {
     try {
         const { id } = req.params;
-        const { usuarioID, nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos } = req.body;
+        const { usuarioID, nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, evolucoesClinicas, depoimentos } = req.body;
 
         if (!nomeCompleto || !genero || !idade || !principaisQueixas || !usoDeMedicamentos || !objetivoDaTerapia || !historicoFamiliar) {
             return res.status(400).json({ error: "Campos obrigatórios não preenchidos."})
         };
 
-        const pacienteAtualizado = await Paciente.atualizarPacientes(Number(id), { usuarioID, nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos });
+        const pacienteAtualizado = await Paciente.atualizarPacientes(Number(id), { usuarioID, nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, evolucoesClinicas, depoimentos });
         res.status(201).json(pacienteAtualizado);
     } catch (error) {
         res.status(500).json({error: error.message || "Erro na hora de atualizar!"});

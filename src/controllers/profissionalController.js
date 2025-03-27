@@ -3,7 +3,7 @@ import * as Profissional from '../models/profissionalModel.js';
 export const listarProfissional = async(req, res) => {
     try {
         const profissional = await Profissional.listarProfissional();
-        req.status(200).json(profissional);
+        res.status(200).json(profissional);
     } catch (error) {
         res.status(500).json({erro: error.message || "Erro na hora de listar!"});
     };
@@ -21,8 +21,8 @@ export const buscarProfissionalPorId = async (req, res) => {
 
 export const criarProfissional = async(req, res) => {
     try {
-        const { nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos } = req.body;
-        const novoProfissional = await Profissional.criarProfissional(nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos);
+        const { usuarioID, nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos, atendimentos, evolucoesClinicas, gruposApoio } = req.body;
+        const novoProfissional = await Profissional.criarProfissional(usuarioID, nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos, atendimentos, evolucoesClinicas, gruposApoio);
         res.status(201).json(novoProfissional);
     } catch (erro) {
         res.status(500).json({error: erro.message || "Erro na hora de criar!"});
@@ -32,13 +32,13 @@ export const criarProfissional = async(req, res) => {
 export const atualizarProfissional = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos } = req.body;
+        const { nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos, atendimentos, evolucoesClinicas, gruposApoio } = req.body;
 
         if (!nomeCompleto || !matricula || !genero || !bio || !formacoes || !especialidade || !faixaEtaria || !preco || !regiao || !foto || !diasAtendimento || !quantAtendimentosGratuitos) {
             return res.status(400).json({ error: "Campos obrigatórios não preenchidos."})
         };
 
-        const profissionalAtualizado = await Profissional.atualizarProfissional(Number(id), { nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos });
+        const profissionalAtualizado = await Profissional.atualizarProfissional(Number(id), { nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos, atendimentos, evolucoesClinicas, gruposApoio });
         res.status(201).json(profissionalAtualizado);
     } catch (error) {
         res.status(500).json({error: error.message || "Erro na hora de atualizar!"});
