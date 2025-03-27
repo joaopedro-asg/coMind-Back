@@ -7,9 +7,9 @@ const router = express.Router();
 router.use(authMiddleware.authenticate);
 
 router.post('/', authMiddleware.authenticate, evolucaoController.criarEvolucaoClinica);
-router.get('/', authMiddleware.authenticate, evolucaoController.getEvolucaoClinica);
-router.get('/evolucaoClinica/:id', authMiddleware.verificarProfissional, evolucaoController.getEvolucaoClinicaById);
-router.put('/evolucaoClinica/:id', authMiddleware.authenticate, evolucaoController.updateEvolucaoClinica);
+router.get('/', authMiddleware.authenticate, evolucaoController.listarEvolucaoClinica);
+router.get('/evolucaoClinica/:id', authMiddleware.verificarProfissional, evolucaoController.buscarEvolucaoClinicaPorId);
+router.put('/evolucaoClinica/:id', authMiddleware.authenticate, evolucaoController.atualizarEvolucaoClinica);
 router.delete('/evolucaoClinica/:id',authMiddleware.authenticate, evolucaoController.excluirEvolucaoClinica);
 
 export default router;
