@@ -1,19 +1,12 @@
 import express from "express";
-import{
-    createEvolucaoClinica,
-    getevolucaoClinica,
-    getevolucaoClinicaById,
-    getevolucaoClinica,
-    updateEvolucaoClinica,
-    deleteEvolucaoClinica,
-} from '../controllers/evolucaoClinicaController';
+import * as evolucaoController from '../controllers/evolucaoClinicaController.js';
 
 const router = express.Router();
 
-router.post('/evolucaoClinica', createEvolucaoClinica);
-router.get('/evolucaoClinica', getevolucaoClinica);
-router.get('/evolucaoClinica', getevolucaoClinicaById);
-router.put('evolucaoClinica', updateEvolucaoClinica);
-router.delete('evolucaoClinica', deleteEvolucaoClinica);
+router.post('/evolucaoClinica', evolucaoController.createEvolucaoClinica);
+router.get('/evolucaoClinica', evolucaoController.getEvolucaoClinica);
+router.get('/evolucaoClinica/:id', evolucaoController.getEvolucaoClinicaById);
+router.put('/evolucaoClinica/:id', evolucaoController.updateEvolucaoClinica);
+router.delete('/evolucaoClinica/:id', evolucaoController.deleteEvolucaoClinica);
 
 export default router;
