@@ -19,28 +19,25 @@ export const authenticate = (req, res, next) => {
 };
 
 export const verificarAdmin = (req, res, next) => {
-    if (!req.user || req.user.userType !== "ADMIN") {
-        return res
-            .status(403)
-            .json({ message: "Acesso restrito a administradores." });
+    if (!req.user || req.user.tipo !== "ADMIN") {
+        console.error("Acesso negado: Tipo de usuário inválido ou não reconhecido", req.user);
+        return res.status(403).json({ message: "Acesso restrito a administradores." });
     }
     next();
 };
 
 export const verificarProfissional = (req, res, next) => {
-    if (!req.user || req.user.userType !== "PROFISSIONAL") {
-        return res
-            .status(403)
-            .json({ message: "Acesso restrito a profissionais." });
+    if (!req.user || req.user.tipo !== "PROFISSIONAL") {
+        console.error("Acesso negado: Tipo de usuário inválido ou não reconhecido", req.user);
+        return res.status(403).json({ message: "Acesso restrito a profissionais." });
     }
     next();
 };
 
 export const verificarPaciente = (req, res, next) => {
-    if (!req.user || req.user.userType !== "PACIENTE") {
-        return res
-            .status(403)
-            .json({ message: "Acesso restrito a pacientes." });
+    if (!req.user || req.user.tipo !== "PACIENTE") {
+        console.error("Acesso negado: Tipo de usuário inválido ou não reconhecido", req.user);
+        return res.status(403).json({ message: "Acesso restrito a pacientes." });
     }
     next();
 };

@@ -1,12 +1,11 @@
-import '../models/userModel.js';
+import * as usuario from '../models/userModel.js';
 
-//MARK: - CRUD
+// MARK: - CRUD
 export const listarUsuario = async (req, res) => {
     try {
-        const usuarios = await user.listarUsuario();
+        const usuarios = await usuario.listarUsuario();
         res.json(usuarios);
-    }
-    catch (error) {
+    } catch (error) {
         console.error('ERRO AO LISTAR USUÁRIOS:', error);
         res.status(500).json({ error: error.message || "Erro ao listar usuários" });
     }
@@ -15,10 +14,9 @@ export const listarUsuario = async (req, res) => {
 export const buscarUsuarioPorId = async (req, res) => {
     try {
         const { id } = req.params;
-        const usuario = await user.buscarUsuarioPorId(Number(id));
-        res.json(usuario);
-    }
-    catch (error) {
+        const user = await usuario.buscarUsuarioPorId(Number(id));
+        res.json(user);
+    } catch (error) {
         console.error('ERRO AO BUSCAR USUÁRIO:', error);
         res.status(404).json({ error: error.message || "Usuário não encontrado" });
     }
@@ -27,48 +25,26 @@ export const buscarUsuarioPorId = async (req, res) => {
 export const buscarUsuarioPorEmail = async (req, res) => {
     try {
         const { email } = req.params;
-        const usuario = await user.buscarUsuarioPorEmail(email);
-        res.json(usuario);
-    }
-    catch (error) {
-        console.error('ERRO AO BUSCAR USUÁRIO:', error);
+        const user = await usuario.buscarUsuarioPorEmail(email);
+        res.json(user);
+    } catch (error) {
+        console.error('ERRO AO BUSCAR USUÁRIO POR EMAIL:', error);
         res.status(404).json({ error: error.message || "Usuário não encontrado" });
     }
 };
 
-//CREATE
-export const criarUsuario = async (req, res) => {
+// CREATE
+export const cadastrarUsuario = async (req, res) => {
     try {
-        const { nomeusario, email, senha, tipo } = req.body;
-
-        if (!nomeusario || !email || !senha || !tipo) {
-            return res.status(400).json({ error: "Nome, email, senha e tipo são obrigatórios" });
-        }
-
-        if (tipo !== 'PACIENTE' && tipo !== 'PROFISSIONAL') {
-            return res.status(400).json({ error: "Tipo de usuário inválido" });
-        }
-
-        const usuarioExistente = await user.buscarUsuarioPorEmail(email);
-        if (usuarioExistente) {
-            return res.status(400).json({ error: "Email já cadastrado" });
-        }
-
-        const novoUsuario = await user.criarUsuario({
-            nomeusario,
-            email,
-            senha,
-            tipo
-        });
-        res.status(201).json(novoUsuario);
-    }
-    catch (error) {
-        console.error('ERRO AO CRIAR USUÁRIO:', error);
-        res.status(500).json({ error: error.message || "Erro ao criar usuário" });
+        const user = await usuario.criarUsuario(req.body);
+        res.status(201).json(user);
+    } catch (error) {
+        console.error('ERRO AO CADASTRAR USUÁRIO:', error);
+        res.status(500).json({ error: error.message || 'Erro ao cadastrar usuário' });
     }
 };
 
-//UPDATE/PUT
+// UPDATE
 export const atualizarUsuario = async (req, res) => {
     try {
         const { id } = req.params;
@@ -78,30 +54,28 @@ export const atualizarUsuario = async (req, res) => {
             return res.status(400).json({ error: "Nome, email, senha e tipo são obrigatórios" });
         }
 
-        const usuarioAtualizado = await user.atualizarUsuario(Number(id), {
+        const userAtualizado = await usuario.atualizarUsuario(Number(id), {
             nomeusario,
             email,
             senha,
             tipo
         });
 
-        res.json(usuarioAtualizado);
-    }
-    catch (error) {
+        res.json(userAtualizado);
+    } catch (error) {
         console.error('ERRO AO ATUALIZAR USUÁRIO:', error);
         res.status(500).json({ error: error.message || "Erro ao atualizar usuário" });
     }
 };
 
-//DELETE
+// DELETE
 export const excluirUsuario = async (req, res) => {
     try {
         const { id } = req.params;
-        await user.excluirUsuario(Number(id));
-        res.status(204).json({ message: "Usuario excluído com sucesso" });
+        await usuario.excluirUsuario(Number(id));
+        res.status(204).send();
     } catch (error) {
         console.error('ERRO AO EXCLUIR USUÁRIO:', error);
         res.status(500).json({ error: error.message || "Erro ao excluir usuário" });
     }
 };
-
