@@ -64,6 +64,7 @@ enum UsuarioTipo {
 }
 
 model Profissional {
+<<<<<<< HEAD
   id                Int @id @default(autoincrement())
   usuarioID         Int @unique
   nomeCompleto      String
@@ -78,10 +79,28 @@ model Profissional {
   foto              String
   diasAtendimento   DiasAtendimento[]
   atendimentos      Atendimento[]
+=======
+  id                         Int @id @default(autoincrement())
+  usuarioID                  Int @unique
+  nomeCompleto               String
+  matricula                  String @unique
+  genero                     String
+  bio                        String
+  formacoes                  String
+  especialidade              Especialidades[]
+  faixaEtaria                FaixaEtaria[]
+  preco                      Int
+  regiao                     String
+  foto                       String
+  diasAtendimento            DiasAtendimento[]
+  quantAtendimentosGratuitos Int
+>>>>>>> 8b73b60f0e2202a83aee8d8b9154e260b3b630ad
 
-  gruposApoio       GruposApoio[]
-  usuario           Usuario @relation(fields: [usuarioID], references: [id], onDelete: Cascade)
-  evolucoesClinicas EvolucaoClinica[]
+  atendimentos               Atendimento[]
+  evolucoesClinicas          EvolucaoClinica[]
+  gruposApoio                GruposApoio[]
+
+  usuario                    Usuario @relation(fields: [usuarioID], references: [id], onDelete: Cascade)
 }
 
 enum Especialidades {
@@ -136,11 +155,12 @@ model Paciente {
   usoDeMedicamentos String
   objetivoDaTerapia String
   historicoFamiliar String
-  atendimentos      Atendimento[]
 
-  depoimentos       Depoimentos?
-  usuario           Usuario @relation(fields: [usuarioID], references: [id], onDelete: Cascade)
+  atendimentos      Atendimento[]
   evolucoesClinicas EvolucaoClinica[]
+  depoimentos       Depoimentos?
+  
+  usuario           Usuario @relation(fields: [usuarioID], references: [id], onDelete: Cascade)
 }
 
 model EvolucaoClinica {
