@@ -1,11 +1,11 @@
 import prisma from '../prisma.js'
 
 export const listarAtendimentos = async () => {
-    return await prisma.Atendimentos.findMany();
+    return await prisma.atendimento.findMany();
 };
 
 export const buscarAtendimentosPorId = async (id) => {
-    const atendimentos = await prisma.Atendimentos.findUnique({
+    const atendimentos = await prisma.atendimento.findUnique({
         where: { id }
     });
     if (!atendimentos) {
@@ -15,7 +15,7 @@ export const buscarAtendimentosPorId = async (id) => {
 };
 
 export const criarAtendimentos = async (status) => {
-    return await prisma.Atendimentos.create({
+    return await prisma.atendimento.create({
         data:
         {
             status 
@@ -24,7 +24,7 @@ export const criarAtendimentos = async (status) => {
 };
 
 export const atualizarAtendimentos = async (id, { status }) => {
-    const atendimentos = await prisma.Atendimentos.findUnique({
+    const atendimentos = await prisma.atendimento.findUnique({
         where: { id }
     });
     if (!atendimentos) {
@@ -37,14 +37,14 @@ export const atualizarAtendimentos = async (id, { status }) => {
 };
 
 export const excluirAtendimentos = async (id) => {
-    const atendimentos = await prisma.Atendimentos.findUnique({
+    const atendimentos = await prisma.atendimento.findUnique({
         where: { id }
     });
     if (!atendimentos) {
         throw new Error('Atendimento não excluído...');
     };
 
-    await prisma.Atendimentos.delete({
+    await prisma.atendimento.delete({
         where: { id }
     });
 };
