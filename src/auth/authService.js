@@ -11,32 +11,51 @@ export const generateToken = (user) => {
 };
 
 //MARK: - Registro
-export const registrarUsuario = async (nome, email, senha, tipo) => {
-  console.log('Verificando usuário existente...');
-  const usuarioExistente = await prisma.usuario.findUnique({
-    where: { email },
-  });
-  console.log('Usuário existente:', usuarioExistente);
+export const registrarUsuario = async (req, res) => {
+  try {
+    const { nome, email, senha, tipo } = req.body;
 
-  if (usuarioExistente) {
-    throw new Error("Usuário já existe.");
+    if (!nome || !email || !senha) {
+      return res.status(400).json({ error: "Nome, email e senha são obrigatórios." });
+    }
+
+    console.log('Verificando usuário existente...');
+    const usuarioExistente = await prisma.usuario.findUnique({
+      where: { email },
+    });
+    if (usuarioExistente) {
+      return res.status(400).json({ error: "Usuário já existe." });
+    }
+
+    const senhaHash = await bcrypt.hash(senha, 12); 
+    console.log('Senha hash gerada:', senhaHash);
+
+    const novoUsuario = await prisma.usuario.create({
+      data: {
+        nomeUsario: nome,
+        email,
+        senha: senhaHash,
+        tipo: tipo || "PACIENTE",
+      },
+    });
+
+    console.log('Novo usuário criado:', novoUsuario);
+
+    res.status(201).json({
+      message: "Usuário registrado com sucesso",
+      user: {
+        id: novoUsuario.id,
+        nomeUsario: novoUsuario.nomeUsario,
+        email: novoUsuario.email,
+        tipo: novoUsuario.tipo,
+      },
+    });
+  } catch (error) {
+    console.error("Erro ao registrar usuário:", error);
+    res.status(500).json({ error: error.message || "Erro ao registrar usuário" });
   }
-
-  const senhaHash = await bcrypt.hash(senha, 12); 
-  console.log('Senha hash gerada:', senhaHash);
-
-  const novoUsuario = await prisma.usuario.create({
-    data: {
-      nomeUsario: nome,
-      email,
-      senha: senhaHash,
-      tipo: tipo || "PACIENTE",
-    },
-  });
-  console.log('Novo usuário criado:', novoUsuario);
-
-  return novoUsuario;
 };
+
 
 //MARK: - Autenticar
 export const autenticarUsuario = async (req, res) => {
@@ -65,7 +84,7 @@ export const autenticarUsuario = async (req, res) => {
     return res.status(200).json({ 
       token,
       tipoUsuario: usuario.tipo,
-      usuario: {
+      user: {
         id: usuario.id,
         nome: usuario.nomeUsario
       }

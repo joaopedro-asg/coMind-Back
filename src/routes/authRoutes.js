@@ -1,9 +1,9 @@
 import express from "express";
-import { registrarUsuario, autenticarUsuario } from "../auth/authService.js";
+import * as auth from "../auth/authService.js";
 
 const router = express.Router();
 
-router.post("/register", registrarUsuario);
-router.post("/login", autenticarUsuario);
+router.post("/register", auth.registrarUsuario);
+router.post("/login", auth.autenticarUsuario);
 
 export default router;

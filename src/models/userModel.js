@@ -1,3 +1,5 @@
+import prisma from "../prisma.js";
+
 //MARK: - Consulta com prisma
 export const listarUsuario = async () => {
     return await prisma.usuario.findMany();
@@ -21,16 +23,24 @@ export const buscarUsuarioPorEmail = async (email) => {
     return usuario;
 };
 
-export const criarUsuario = async ({nomeusario, email, senha, tipo}) => {
-    return await prisma.usuario.create({
-        data: {
-            nomeusario,
-            email,
-            senha,
-            tipo,
-        },
+export const criarUsuario = async (data) => {
+    const usuario = await prisma.usuario.create({
+      data: {
+        email,
+        senha,
+        tipo,
+        [tipo === 'PACIENTE' ? 'pacientes' : 'profissionais']: {
+          create: dadosPerfil
+        }
+      },
+      include: {
+        profissionais: true,
+        pacientes: true
+      }
     });
-};
+  
+    return usuario;
+  };
 
 export const atualizarUsuario = async (id, {nomeusario, email, senha, tipo}) => {
     const usuario = await prisma.usuario.findUnique({

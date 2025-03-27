@@ -5,27 +5,11 @@ const router = express.Router();
 
 router.use(authMiddleware.authenticate);
 
-router.get('/', userController.listarUsuario);
-router.get('/:id', userController.buscarUsuarioPorId);
-router.get('/email/:email', userController.buscarUsuarioPorEmail);
-router.put('/:id', userController.atualizarUsuario);
-router.delete('/:id', userController.excluirUsuario);
-
-//MARK: - Melhorar
-router.get("/profile", (req, res) => {
-    res.json({ message: "Bem-vindo ao seu perfil!", user: req.user });
-});
-
-router.get("/admin", authMiddleware.verificarAdmin, (req, res) => {
-    res.json({ message: "Bem-vindo, administrador!", user: req.user });
-});
-
-router.get("/profissional", authMiddleware.verificarProfissional, (req, res) => {
-    res.json({ message: "Bem-vindo, profissional!", user: req.user });
-});
-
-router.get("/paciente", authMiddleware.verificarPaciente, (req, res) => {
-    res.json({ message: "Bem-vindo, paciente!", user: req.user });
-});
+// somente ADMIN
+router.get('/', authMiddleware.verificarAdmin, userController.listarUsuario);
+router.get('/:id', authMiddleware.verificarAdmin, userController.buscarUsuarioPorId);
+router.get('/email/:email', authMiddleware.verificarAdmin, userController.buscarUsuarioPorEmail);
+router.put('/:id', authMiddleware.verificarAdmin, userController.atualizarUsuario);
+router.delete('/:id', authMiddleware.verificarAdmin, userController.excluirUsuario);
 
 export default router;
