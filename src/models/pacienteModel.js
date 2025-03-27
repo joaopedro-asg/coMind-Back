@@ -1,11 +1,11 @@
 import prisma from '../prisma.js'
 
 export const listarPacientes = async () => {
-    return await prisma.Paciente.findMany();
+    return await prisma.paciente.findMany();
 };
 
 export const buscarPacientesPorId = async (id) => {
-    const paciente = await prisma.Paciente.findUnique({
+    const paciente = await prisma.paciente.findUnique({
         where: { id }
     });
     if (!paciente) {
@@ -15,7 +15,7 @@ export const buscarPacientesPorId = async (id) => {
 };
 
 export const criarPacientes = async (nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos) => {
-    return await prisma.Paciente.create({
+    return await prisma.paciente.create({
         data:
         {
             nomeCompleto, 
@@ -32,27 +32,27 @@ export const criarPacientes = async (nomeCompleto, genero, idade, principaisQuei
 };
 
 export const atualizarPacietes = async (id, { nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos }) => {
-    const paciente = await prisma.Paciente.findUnique({
+    const paciente = await prisma.paciente.findUnique({
         where: { id }
     });
     if (!paciente) {
         throw new Error('Paciente não atualizado...');
     };
-    return await prisma.Paciente.update({
+    return await prisma.paciente.update({
         where: { id },
         data: { nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos }
     });
 };
 
 export const excluirPacientes = async (id) => {
-    const paciente = await prisma.Paciente.findUnique({
+    const paciente = await prisma.paciente.findUnique({
         where: { id }
     });
     if (!paciente) {
         throw new Error('Paciente não excluído...');
     };
 
-    await prisma.Paciente.delete({
+    await prisma.paciente.delete({
         where: { id }
     });
 };
