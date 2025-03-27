@@ -14,10 +14,11 @@ export const buscarPacientesPorId = async (id) => {
     return paciente;
 };
 
-export const criarPacientes = async (nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos) => {
+export const criarPacientes = async (usuarioID, nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos) => {
     return await prisma.paciente.create({
         data:
         {
+            usuarioID,
             nomeCompleto, 
             genero, 
             idade, 
@@ -31,7 +32,7 @@ export const criarPacientes = async (nomeCompleto, genero, idade, principaisQuei
     });
 };
 
-export const atualizarPacietes = async (id, { nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos }) => {
+export const atualizarPacientes = async (id, { usuarioID, nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos }) => {
     const paciente = await prisma.paciente.findUnique({
         where: { id }
     });
@@ -40,7 +41,7 @@ export const atualizarPacietes = async (id, { nomeCompleto, genero, idade, princ
     };
     return await prisma.paciente.update({
         where: { id },
-        data: { nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos }
+        data: { usuarioID, nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos }
     });
 };
 
