@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,53 +8,43 @@ datasource db {
 }
 
 model Depoimentos {
-  id          Int @id @default(autoincrement())
-  pacienteID  Int @unique
-  nome        String
-  local       String
-  texto       String
-  dataEnvio   DateTime @default(now())
-
-  paciente    Paciente @relation(fields: [pacienteID], references: [id])
+  id         Int      @id @default(autoincrement())
+  pacienteID Int      @unique
+  nome       String
+  local      String
+  texto      String
+  dataEnvio  DateTime @default(now())
+  paciente   Paciente @relation(fields: [pacienteID], references: [id])
 }
 
 model Atendimento {
-  id             Int @id @default(autoincrement())
-  profissionalID Int 
+  id             Int          @id @default(autoincrement())
+  profissionalID Int
   pacienteID     Int
-  data           DateTime @default(now())
-  horario        DateTime @default(now())
+  data           DateTime     @default(now())
+  horario        DateTime     @default(now())
   status         String
-
-  paciente       Paciente  @relation(fields: [pacienteID], references: [id])
+  paciente       Paciente     @relation(fields: [pacienteID], references: [id])
   profissional   Profissional @relation(fields: [profissionalID], references: [id])
 }
 
 model GruposApoio {
-  id             Int @id @default(autoincrement())
+  id             Int          @id @default(autoincrement())
   profissionalID Int
   tipo           String
   descricao      String
   local          String
-
   profissional   Profissional @relation(fields: [profissionalID], references: [id])
 }
 
 model Usuario {
-  id         Int @id @default(autoincrement())
-  nomeUsario String
-  email      String @unique
-  senha      String
-  tipo       UsuarioTipo @default(PACIENTE)
-
-  paciente    Paciente? @relation
-  profissional Profissional? @relation
-}
-
-enum UsuarioTipo {
-  ADMIN
-  PACIENTE
-  PROFISSIONAL
+  id           Int           @id @default(autoincrement())
+  nomeUsario   String
+  email        String        @unique
+  senha        String
+  tipo         UsuarioTipo   @default(PACIENTE)
+  paciente     Paciente?
+  profissional Profissional?
 }
 
 model Profissional {

@@ -9,10 +9,10 @@ exports.listarDepoimentos = async(req, res) => {
     };
 };
 
-exports.buscarDepoimentoPorId = async (req, res) => {
+exports.buscarDepoimentosPorId = async (req, res) => {
     try {
         const { id } = req.params;
-        const depoimento = await Depoimento.buscarDepoimentoPorId(Number(id));
+        const depoimento = await Depoimento.buscarDepoimentosPorId(Number(id));
         res.status(200).json(paciente);
     } catch (error) {
         res.status(404).json({error: error.message || "Erro na hora de buscar!"});
@@ -45,10 +45,10 @@ exports.atualizarDepoimentos = async (req, res) => {
     };
 };
 
-exports.excluirDepoimento = async (req, res) => {
+exports.excluirDepoimentos = async (req, res) => {
     try {
         const { id } = req.params;
-        await Depoimento.excluirDepoimento(Number(id));
+        await Depoimento.excluirDepoimentos(Number(id));
         res.status(204).send();
     } catch (error) {
         res.status(500).json({error: error.message || "Erro na hora de excluir!"});
