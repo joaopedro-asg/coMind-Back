@@ -12,7 +12,7 @@ exports.listarGruposApoio = async(req, res) => {
 exports.buscarGruposApoioPorId = async (req, res) => {
     try {
         const { id } = req.params;
-        const GruposApoio = await GruposApoio.buscarGruposApoioPorId(Number(id));
+        const gruposApoio = await GruposApoio.buscarGruposApoioPorId(Number(id));
         res.status(200).json(gruposApoio);
     } catch (error) {
         res.status(404).json({error: error.message || "Erro na hora de buscar!"});
