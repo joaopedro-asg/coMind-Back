@@ -1,3 +1,4 @@
+import prisma from '../prisma.js'
 
 export const listarGruposApoio = async () => {
     return await prisma.GruposApoio.findMany();

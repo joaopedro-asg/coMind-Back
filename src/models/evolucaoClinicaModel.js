@@ -1,3 +1,4 @@
+import prisma from '../prisma.js'
 
 export const listarEvolucaoClinica = async () => {
     return await prisma.EvolucaoClinica.findMany();

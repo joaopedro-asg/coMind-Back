@@ -1,3 +1,4 @@
+import prisma from '../prisma.js'
 
 export const listarProfissional = async () => {
     return await prisma.Profissional.findMany();
