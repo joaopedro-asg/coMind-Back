@@ -1,4 +1,4 @@
-const Atendimento = require("../models/gruposApoioModel");
+const Atendimento = require("../models/atendimentoModel");
 
 exports.listarAtendimentos = async(req, res) => {
     try {
