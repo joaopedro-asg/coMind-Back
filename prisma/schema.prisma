@@ -37,6 +37,12 @@ model GruposApoio {
   profissional   Profissional @relation(fields: [profissionalID], references: [id])
 }
 
+enum UsuarioTipo {
+  ADMIN
+  PACIENTE
+  PROFISSIONAL
+}
+
 model Usuario {
   id           Int           @id @default(autoincrement())
   nomeUsario   String
@@ -48,10 +54,10 @@ model Usuario {
 }
 
 model Profissional {
-  id                         Int @id @default(autoincrement())
-  usuarioID                  Int @unique
+  id                         Int               @id @default(autoincrement())
+  usuarioID                  Int               @unique
   nomeCompleto               String
-  matricula                  String @unique
+  matricula                  String            @unique
   genero                     String
   bio                        String
   formacoes                  String
@@ -67,7 +73,7 @@ model Profissional {
   evolucoesClinicas          EvolucaoClinica[]
   gruposApoio                GruposApoio[]
 
-  usuario                    Usuario @relation(fields: [usuarioID], references: [id], onDelete: Cascade)
+  usuario                    Usuario           @relation(fields: [usuarioID], references: [id], onDelete: Cascade)
 }
 
 enum Especialidades {
@@ -113,8 +119,8 @@ enum DiasAtendimento {
 }
 
 model Paciente {
-  id                Int @id @default(autoincrement())
-  usuarioID         Int @unique
+  id                Int               @id @default(autoincrement())
+  usuarioID         Int               @unique
   nomeCompleto      String
   genero            String
   idade             Int
@@ -127,17 +133,17 @@ model Paciente {
   evolucoesClinicas EvolucaoClinica[]
   depoimentos       Depoimentos?
   
-  usuario           Usuario @relation(fields: [usuarioID], references: [id], onDelete: Cascade)
+  usuario           Usuario           @relation(fields: [usuarioID], references: [id], onDelete: Cascade)
 }
 
 model EvolucaoClinica {
-  id                  Int @id @default(autoincrement())
-  pacienteID          Int @unique
-  profissionalID      Int @unique
+  id                  Int          @id @default(autoincrement())
+  pacienteID          Int          @unique
+  profissionalID      Int          @unique
   relatoAtendimento   String
   ajustesNoTratamento String
-  data                DateTime @default(now())
+  data                DateTime     @default(now())
 
-  paciente            Paciente  @relation(fields: [pacienteID], references: [id])
+  paciente            Paciente     @relation(fields: [pacienteID], references: [id])
   profissional        Profissional @relation(fields: [profissionalID], references: [id])
 }

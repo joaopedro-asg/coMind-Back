@@ -1,6 +1,6 @@
-const Profissional = require("../models/profissionalModel");
+import * as Profissional from '../models/profissionalModel.js';
 
-exports.listarProfissional = async(req, res) => {
+export const listarProfissional = async(req, res) => {
     try {
         const profissional = await Profissional.listarProfissional();
         req.status(200).json(profissional);
@@ -9,7 +9,7 @@ exports.listarProfissional = async(req, res) => {
     };
 };
 
-exports.buscarProfissionalPorId = async (req, res) => {
+export const buscarProfissionalPorId = async (req, res) => {
     try {
         const { id } = req.params;
         const profissional = await Profissional.buscarProfissionalPorId(Number(id));
@@ -19,7 +19,7 @@ exports.buscarProfissionalPorId = async (req, res) => {
     };
 };
 
-exports.criarProfissional = async(req, res) => {
+export const criarProfissional = async(req, res) => {
     try {
         const { nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos } = req.body;
         const novoProfissional = await Profissional.criarProfissional(nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos);
@@ -29,7 +29,7 @@ exports.criarProfissional = async(req, res) => {
     };
 };
 
-exports.atualizarProfissional = async (req, res) => {
+export const atualizarProfissional = async (req, res) => {
     try {
         const { id } = req.params;
         const { nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos } = req.body;
@@ -45,7 +45,7 @@ exports.atualizarProfissional = async (req, res) => {
     };
 };
 
-exports.excluirProfissional = async (req, res) => {
+export const excluirProfissional = async (req, res) => {
     try {
         const { id } = req.params;
         await Profissional.excluirProfissional(Number(id));

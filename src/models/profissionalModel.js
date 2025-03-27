@@ -1,10 +1,9 @@
-const prisma = require("../prisma");
 
-const listarProfissional = async () => {
+export const listarProfissional = async () => {
     return await prisma.Profissional.findMany();
 };
 
-const buscarProfissionalPorId = async (id) => {
+export const buscarProfissionalPorId = async (id) => {
     const profissional = await prisma.Profissional.findUnique({
         where: { id }
     });
@@ -14,7 +13,7 @@ const buscarProfissionalPorId = async (id) => {
     return profissional;
 };
 
-const criarProfissional = async (nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos) => {
+export const criarProfissional = async (nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos) => {
     return await prisma.EvolucaoClinica.create({
         data:
         {
@@ -34,7 +33,7 @@ const criarProfissional = async (nomeCompleto, matricula, genero, bio, formacoes
     });
 };
 
-const atualizarProfissional = async (id, { nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos }) => {
+export const atualizarProfissional = async (id, { nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos }) => {
     const profissional = await prisma.Profissional.findUnique({
         where: { id }
     });
@@ -47,7 +46,7 @@ const atualizarProfissional = async (id, { nomeCompleto, matricula, genero, bio,
     });
 };
 
-const excluirProfissional = async (id) => {
+export const excluirProfissional = async (id) => {
     const profissional = await prisma.Profissional.findUnique({
         where: { id }
     });
@@ -59,5 +58,3 @@ const excluirProfissional = async (id) => {
         where: { id }
     });
 };
-
-module.exports = {listarProfissional, buscarProfissionalPorId, criarProfissional, atualizarProfissional, excluirProfissional };

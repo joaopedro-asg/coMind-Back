@@ -1,6 +1,6 @@
-const Atendimento = require("../models/atendimentoModel");
+import * as Atendimento from '../models/atendimentoModel.js';
 
-exports.listarAtendimentos = async(req, res) => {
+export const listarAtendimentos = async(req, res) => {
     try {
         const atendimentos = await Atendimento.listarAtendimentos();
         req.status(200).json(atendimentos);
@@ -9,7 +9,7 @@ exports.listarAtendimentos = async(req, res) => {
     };
 };
 
-exports.buscarAtendimentosPorId = async (req, res) => {
+export const buscarAtendimentosPorId = async (req, res) => {
     try {
         const { id } = req.params;
         const atendimentos = await Atendimento.buscarAtendimentosPorId(Number(id));
@@ -19,7 +19,7 @@ exports.buscarAtendimentosPorId = async (req, res) => {
     };
 };
 
-exports.criarAtendimentos = async(req, res) => {
+export const criarAtendimentos = async(req, res) => {
     try {
         const { status } = req.body;
         const novoAtendimentos = await Atendimento.criarAtendimentos(status);
@@ -29,7 +29,7 @@ exports.criarAtendimentos = async(req, res) => {
     };
 };
 
-exports.atualizarAtendimentos = async (req, res) => {
+export const atualizarAtendimentos = async (req, res) => {
     try {
         const { id } = req.params;
         const { status } = req.body;
@@ -45,7 +45,7 @@ exports.atualizarAtendimentos = async (req, res) => {
     };
 };
 
-exports.excluirAtendimentos = async (req, res) => {
+export const excluirAtendimentos = async (req, res) => {
     try {
         const { id } = req.params;
         await Atendimento.excluirAtendimentos(Number(id));

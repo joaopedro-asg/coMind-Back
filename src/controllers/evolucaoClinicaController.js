@@ -1,6 +1,6 @@
-const EvolucaoClinica = require("../models/evolucaoClinicaModel");
+import * as EvolucaoClinica from '../models/evolucaoClinicaModel.js';
 
-exports.listarEvolucaoClinica = async(req, res) => {
+export const listarEvolucaoClinica = async(req, res) => {
     try {
         const evolucaoClinica = await EvolucaoClinica.listarEvolucaoClinica();
         req.status(200).json(evolucaoClinica);
@@ -9,7 +9,7 @@ exports.listarEvolucaoClinica = async(req, res) => {
     };
 };
 
-exports.buscarEvolucaoClinicaPorId = async (req, res) => {
+export const buscarEvolucaoClinicaPorId = async (req, res) => {
     try {
         const { id } = req.params;
         const evolucaoClinica = await EvolucaoClinica.buscarEvolucaoClinicaPorId(Number(id));
@@ -19,7 +19,7 @@ exports.buscarEvolucaoClinicaPorId = async (req, res) => {
     };
 };
 
-exports.criarEvolucaoClinica = async(req, res) => {
+export const criarEvolucaoClinica = async(req, res) => {
     try {
         const { relatoAtendimento, ajustesNoTratamento } = req.body;
         const novoEvolucaoClinica = await EvolucaoClinica.criarEvolucaoClinica(relatoAtendimento, ajustesNoTratamento);
@@ -29,7 +29,7 @@ exports.criarEvolucaoClinica = async(req, res) => {
     };
 };
 
-exports.atualizarEvolucaoClinica = async (req, res) => {
+export const atualizarEvolucaoClinica = async (req, res) => {
     try {
         const { id } = req.params;
         const { relatoAtendimento, ajustesNoTratamento } = req.body;
@@ -45,7 +45,7 @@ exports.atualizarEvolucaoClinica = async (req, res) => {
     };
 };
 
-exports.excluirEvolucaoClinica = async (req, res) => {
+export const excluirEvolucaoClinica = async (req, res) => {
     try {
         const { id } = req.params;
         await EvolucaoClinica.excluirEvolucaoClinica(Number(id));

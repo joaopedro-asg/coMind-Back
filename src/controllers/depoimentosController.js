@@ -1,6 +1,6 @@
-const Depoimento = require("../models/depoimentosModel");
+import * as Depoimento from '../models/depoimentosModel.js';
 
-exports.listarDepoimentos = async(req, res) => {
+export const listarDepoimentos = async(req, res) => {
     try {
         const depoimentos = await Depoimento.listarDepoimentos();
         req.status(200).json(depoimentos);
@@ -9,7 +9,7 @@ exports.listarDepoimentos = async(req, res) => {
     };
 };
 
-exports.buscarDepoimentosPorId = async (req, res) => {
+export const buscarDepoimentosPorId = async (req, res) => {
     try {
         const { id } = req.params;
         const depoimento = await Depoimento.buscarDepoimentosPorId(Number(id));
@@ -19,7 +19,7 @@ exports.buscarDepoimentosPorId = async (req, res) => {
     };
 };
 
-exports.criarDepoimentos = async(req, res) => {
+export const criarDepoimentos = async(req, res) => {
     try {
         const { nome, local, texto } = req.body;
         const novoDepoimento = await Depoimento.criarDepoimentos(nome, local, texto);
@@ -29,7 +29,7 @@ exports.criarDepoimentos = async(req, res) => {
     };
 };
 
-exports.atualizarDepoimentos = async (req, res) => {
+export const atualizarDepoimentos = async (req, res) => {
     try {
         const { id } = req.params;
         const { nome, local, texto } = req.body;
@@ -45,7 +45,7 @@ exports.atualizarDepoimentos = async (req, res) => {
     };
 };
 
-exports.excluirDepoimentos = async (req, res) => {
+export const excluirDepoimentos = async (req, res) => {
     try {
         const { id } = req.params;
         await Depoimento.excluirDepoimentos(Number(id));

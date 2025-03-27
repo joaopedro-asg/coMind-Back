@@ -1,10 +1,9 @@
-const prisma = require("../prisma");
 
-const listarDepoimentos = async () => {
+export const listarDepoimentos = async () => {
     return await prisma.Depoimento.findMany();
 };
 
-const buscarDepoimentosPorId = async (id) => {
+export const buscarDepoimentosPorId = async (id) => {
     const depoimento = await prisma.Depoimento.findUnique({
         where: { id }
     });
@@ -14,7 +13,7 @@ const buscarDepoimentosPorId = async (id) => {
     return depoimento;
 };
 
-const criarDepoimentos = async (nome, local, texto) => {
+export const criarDepoimentos = async (nome, local, texto) => {
     return await prisma.Depoimento.create({
         data:
         {
@@ -25,7 +24,7 @@ const criarDepoimentos = async (nome, local, texto) => {
     });
 };
 
-const atualizarDepoimentos = async (id, { nome, local, texto }) => {
+export const atualizarDepoimentos = async (id, { nome, local, texto }) => {
     const depoimento = await prisma.Depoimento.findUnique({
         where: { id }
     });
@@ -38,7 +37,7 @@ const atualizarDepoimentos = async (id, { nome, local, texto }) => {
     });
 };
 
-const excluirDepoimentos = async (id) => {
+export const excluirDepoimentos = async (id) => {
     const depoimento = await prisma.Depoimento.findUnique({
         where: { id }
     });
@@ -50,5 +49,3 @@ const excluirDepoimentos = async (id) => {
         where: { id }
     });
 };
-
-module.exports = {listarDepoimentos, buscarDepoimentosPorId, criarDepoimentos, atualizarDepoimentos, excluirDepoimentos};

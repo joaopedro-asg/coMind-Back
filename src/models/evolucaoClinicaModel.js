@@ -1,10 +1,9 @@
-const prisma = require("../prisma");
 
-const listarEvolucaoClinica = async () => {
+export const listarEvolucaoClinica = async () => {
     return await prisma.EvolucaoClinica.findMany();
 };
 
-const buscarEvolucaoClinicaPorId = async (id) => {
+export const buscarEvolucaoClinicaPorId = async (id) => {
     const evolucaoClinica = await prisma.EvolucaoClinica.findUnique({
         where: { id }
     });
@@ -14,7 +13,7 @@ const buscarEvolucaoClinicaPorId = async (id) => {
     return gruposApoio;
 };
 
-const criarEvolucaoClinica = async (relatoAtendimento, ajustesNoTratamento) => {
+export const criarEvolucaoClinica = async (relatoAtendimento, ajustesNoTratamento) => {
     return await prisma.EvolucaoClinica.create({
         data:
         {
@@ -24,7 +23,7 @@ const criarEvolucaoClinica = async (relatoAtendimento, ajustesNoTratamento) => {
     });
 };
 
-const atualizarEvolucaoClinica = async (id, { relatoAtendimento, ajustesNoTratamento }) => {
+export const atualizarEvolucaoClinica = async (id, { relatoAtendimento, ajustesNoTratamento }) => {
     const evolucaoClinica = await prisma.EvolucaoClinica.findUnique({
         where: { id }
     });
@@ -37,7 +36,7 @@ const atualizarEvolucaoClinica = async (id, { relatoAtendimento, ajustesNoTratam
     });
 };
 
-const excluirEvolucaoClinica = async (id) => {
+export const excluirEvolucaoClinica = async (id) => {
     const evolucaoClinica = await prisma.EvolucaoClinica.findUnique({
         where: { id }
     });
@@ -49,5 +48,3 @@ const excluirEvolucaoClinica = async (id) => {
         where: { id }
     });
 };
-
-module.exports = {listarEvolucaoClinica, buscarEvolucaoClinicaPorId, criarEvolucaoClinica, atualizarEvolucaoClinica, excluirEvolucaoClinica };

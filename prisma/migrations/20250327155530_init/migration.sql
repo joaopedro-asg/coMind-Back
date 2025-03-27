@@ -1,14 +1,14 @@
 -- CreateEnum
-CREATE TYPE "UsuarioTipo" AS ENUM ('admin', 'paciente', 'profissional');
+CREATE TYPE "UsuarioTipo" AS ENUM ('ADMIN', 'PACIENTE', 'PROFISSIONAL');
 
 -- CreateEnum
-CREATE TYPE "Especialidades" AS ENUM ('ansiedade', 'depressao', 'fobias', 'autoconhecimento', 'autoestima', 'borderline', 'bulimia', 'cancer', 'transtornos', 'compulsoes', 'dislexia', 'disturbios', 'drogas', 'esquizofrenia', 'estressa', 'hiperatividade', 'hipocondria', 'obesidade', 'burnout', 'sexualidade', 'suicídio');
+CREATE TYPE "Especialidades" AS ENUM ('ANSIEDADE', 'DEPRESSAO', 'FOBIAS', 'AUTOCONHECIMENTO', 'AUTOESTIMA', 'BORDERLINE', 'BULIMIA', 'CANCER', 'TRANSTORNOS', 'COMPULSOES', 'DISLEXIA', 'DISTURBIOS', 'DROGAS', 'ESQUIZOFRENIA', 'ESTRESSA', 'HIPERATIVIDADE', 'HIPOCONDRIA', 'OBESIDADE', 'BURNOUT', 'SEXUALIDADE', 'SUICIDIO');
 
 -- CreateEnum
-CREATE TYPE "FaixaEtaria" AS ENUM ('criancas', 'adolescentes', 'adultos', 'idosos', 'casais');
+CREATE TYPE "FaixaEtaria" AS ENUM ('CRIANCAS', 'ADOLESCENTES', 'ADULTOS', 'IDOSOS', 'CASAIS');
 
 -- CreateEnum
-CREATE TYPE "DiasAtendimento" AS ENUM ('domingo', 'segunda_feira', 'terca_feira', 'quarta_feira', 'quinta_feira', 'sexta_feira', 'sabado');
+CREATE TYPE "DiasAtendimento" AS ENUM ('DOMINGO', 'SEGUNDA', 'TERCA', 'QUARTA', 'QUINTA', 'SEXTA', 'SABADO');
 
 -- CreateTable
 CREATE TABLE "Depoimentos" (
@@ -51,7 +51,7 @@ CREATE TABLE "Usuario" (
     "nomeUsario" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "senha" TEXT NOT NULL,
-    "tipo" "UsuarioTipo" NOT NULL DEFAULT 'paciente',
+    "tipo" "UsuarioTipo" NOT NULL DEFAULT 'PACIENTE',
 
     CONSTRAINT "Usuario_pkey" PRIMARY KEY ("id")
 );
@@ -66,11 +66,12 @@ CREATE TABLE "Profissional" (
     "bio" TEXT NOT NULL,
     "formacoes" TEXT NOT NULL,
     "especialidade" "Especialidades"[],
-    "faixaEtaria" "FaixaEtaria" NOT NULL,
+    "faixaEtaria" "FaixaEtaria"[],
     "preco" INTEGER NOT NULL,
     "regiao" TEXT NOT NULL,
     "foto" TEXT NOT NULL,
     "diasAtendimento" "DiasAtendimento"[],
+    "quantAtendimentosGratuitos" INTEGER NOT NULL,
 
     CONSTRAINT "Profissional_pkey" PRIMARY KEY ("id")
 );

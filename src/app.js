@@ -2,19 +2,17 @@ import cors from 'cors';
 import express from 'express';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import pacienteRoutes from './routes/pacienteRoutes.js';
+import depoimentosRoutes from './routes/depoimentosRoutes.js';
+import profissionalRoutes from './routes/profissionalRoutes.js';
+import gruposApoioRoutes from './routes/gruposApoioRoutes.js';
+import atendimentoRoutes from './routes/atendimentoRoutes.js'
+import evolucaoClinica from './routes/evolucaoClinicaRoutes.js';
 
-const express = require("express");
 const app = express();
 
-const pacienteRoutes = require("./routes/pacienteRoutes.js");
-const depoimentosRoutes = require("./routes/depoimentosRoutes.js");
-const profissionalRoutes = require("./routes/profissionalRoutes.js");
-const gruposApoioRoutes = require("./routes/gruposApoioRoutes.js");
-const atendimentoRoutes = require("./routes/atendimentoRoutes.js");
-const evolucaoClinica = require("./routes/evolucaoClinicaRoutes.js");
-
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);

@@ -1,10 +1,9 @@
-const prisma = require("../prisma");
 
-const listarAtendimentos = async () => {
+export const listarAtendimentos = async () => {
     return await prisma.Atendimentos.findMany();
 };
 
-const buscarAtendimentosPorId = async (id) => {
+export const buscarAtendimentosPorId = async (id) => {
     const atendimentos = await prisma.Atendimentos.findUnique({
         where: { id }
     });
@@ -14,7 +13,7 @@ const buscarAtendimentosPorId = async (id) => {
     return gruposApoio;
 };
 
-const criarAtendimentos = async (status) => {
+export const criarAtendimentos = async (status) => {
     return await prisma.Atendimentos.create({
         data:
         {
@@ -23,7 +22,7 @@ const criarAtendimentos = async (status) => {
     });
 };
 
-const atualizarAtendimentos = async (id, { status }) => {
+export const atualizarAtendimentos = async (id, { status }) => {
     const atendimentos = await prisma.Atendimentos.findUnique({
         where: { id }
     });
@@ -36,7 +35,7 @@ const atualizarAtendimentos = async (id, { status }) => {
     });
 };
 
-const excluirAtendimentos = async (id) => {
+export const excluirAtendimentos = async (id) => {
     const atendimentos = await prisma.Atendimentos.findUnique({
         where: { id }
     });
@@ -48,5 +47,3 @@ const excluirAtendimentos = async (id) => {
         where: { id }
     });
 };
-
-module.exports = {listarAtendimentos, buscarAtendimentosPorId, criarAtendimentos, atualizarAtendimentos, excluirAtendimentos };

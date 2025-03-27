@@ -1,6 +1,6 @@
-const GruposApoio = require("../models/gruposApoioModel");
+import * as GruposApoio from '../models/gruposApoioModel.js';
 
-exports.listarGruposApoio = async(req, res) => {
+export const listarGruposApoio = async(req, res) => {
     try {
         const gruposApoio = await GruposApoio.listarGruposApoio();
         req.status(200).json(gruposApoio);
@@ -9,7 +9,7 @@ exports.listarGruposApoio = async(req, res) => {
     };
 };
 
-exports.buscarGruposApoioPorId = async (req, res) => {
+export const buscarGruposApoioPorId = async (req, res) => {
     try {
         const { id } = req.params;
         const gruposApoio = await GruposApoio.buscarGruposApoioPorId(Number(id));
@@ -19,7 +19,7 @@ exports.buscarGruposApoioPorId = async (req, res) => {
     };
 };
 
-exports.criarGruposApoio = async(req, res) => {
+export const criarGruposApoio = async(req, res) => {
     try {
         const { tipo, descricao, local } = req.body;
         const novoGruposApoio = await GruposApoio.criarGruposApoio(tipo, descricao, local);
@@ -29,7 +29,7 @@ exports.criarGruposApoio = async(req, res) => {
     };
 };
 
-exports.atualizarGruposApoio = async (req, res) => {
+export const atualizarGruposApoio = async (req, res) => {
     try {
         const { id } = req.params;
         const { tipo, descricao, local } = req.body;
@@ -45,7 +45,7 @@ exports.atualizarGruposApoio = async (req, res) => {
     };
 };
 
-exports.excluirGruposApoio = async (req, res) => {
+export const excluirGruposApoio = async (req, res) => {
     try {
         const { id } = req.params;
         await GruposApoio.excluirGruposApoio(Number(id));

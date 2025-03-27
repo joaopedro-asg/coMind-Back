@@ -1,5 +1,5 @@
-const express = require("express");
-const Depoimento = require("../controllers/depoimentosController");
+import express from 'express';
+import * as Depoimento from '../controllers/depoimentosController.js';
 const router = express.Router();
 
 router.get("/", Depoimento.listarDepoimentos);
@@ -8,4 +8,4 @@ router.post("/", Depoimento.criarDepoimentos);
 router.put("/:id", Depoimento.atualizarDepoimentos);
 router.delete("/:id", Depoimento.excluirDepoimentos);
 
-module.exports = router;
+export default router;

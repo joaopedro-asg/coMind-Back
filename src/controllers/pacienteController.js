@@ -1,6 +1,6 @@
-const Paciente = require("../models/pacienteModel");
+import * as Paciente from '../models/pacienteModel.js';
 
-exports.listarPacientes = async(req, res) => {
+export const listarPacientes = async(req, res) => {
     try {
         const pacientes = await Paciente.listarPacientes();
         req.status(200).json(pacientes);
@@ -9,7 +9,7 @@ exports.listarPacientes = async(req, res) => {
     };
 };
 
-exports.buscarPacientesPorId = async (req, res) => {
+export const buscarPacientesPorId = async (req, res) => {
     try {
         const { id } = req.params;
         const paciente = await Paciente.buscarPacientesPorId(Number(id));
@@ -19,7 +19,7 @@ exports.buscarPacientesPorId = async (req, res) => {
     };
 };
 
-exports.criarPacientes = async(req, res) => {
+export const criarPacientes = async(req, res) => {
     try {
         const { nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos } = req.body;
         const novoPaciente = await Paciente.criarPacientes(nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos);
@@ -29,7 +29,7 @@ exports.criarPacientes = async(req, res) => {
     };
 };
 
-exports.atualizarPacientes = async (req, res) => {
+export const atualizarPacientes = async (req, res) => {
     try {
         const { id } = req.params;
         const { nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos } = req.body;
@@ -45,7 +45,7 @@ exports.atualizarPacientes = async (req, res) => {
     };
 };
 
-exports.excluirPacientes = async (req, res) => {
+export const excluirPacientes = async (req, res) => {
     try {
         const { id } = req.params;
         await Paciente.excluirPacientes(Number(id));

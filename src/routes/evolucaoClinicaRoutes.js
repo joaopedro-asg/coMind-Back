@@ -1,5 +1,5 @@
-const express = require("express");
-const EvolucaoClinica = require("../controllers/evolucaoClinicaController");
+import express from 'express';
+import * as EvolucaoClinica from '../controllers/evolucaoClinicaController.js';
 const router = express.Router();
 
 router.get("/", EvolucaoClinica.listarEvolucaoClinica);
@@ -8,4 +8,4 @@ router.post("/", EvolucaoClinica.criarEvolucaoClinica);
 router.put("/:id", EvolucaoClinica.atualizarEvolucaoClinica);
 router.delete("/:id", EvolucaoClinica.excluirEvolucaoClinica);
 
-module.exports = router;
+export default router;

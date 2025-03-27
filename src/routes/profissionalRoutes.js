@@ -1,5 +1,5 @@
-const express = require("express");
-const Profissional = require("../controllers/profissionalController");
+import express from 'express';
+import * as Profissional from '../controllers/profissionalController.js';
 const router = express.Router();
 
 router.get("/", Profissional.listarProfissional);
@@ -8,4 +8,4 @@ router.post("/", Profissional.criarProfissional);
 router.put("/:id", Profissional.atualizarProfissional);
 router.delete("/:id", Profissional.excluirProfissional);
 
-module.exports = router;
+export default router;

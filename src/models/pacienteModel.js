@@ -1,10 +1,9 @@
-const prisma = require("../prisma");
 
-const listarPacientes = async () => {
+export const listarPacientes = async () => {
     return await prisma.Paciente.findMany();
 };
 
-const buscarPacientesPorId = async (id) => {
+export const buscarPacientesPorId = async (id) => {
     const paciente = await prisma.Paciente.findUnique({
         where: { id }
     });
@@ -14,7 +13,7 @@ const buscarPacientesPorId = async (id) => {
     return paciente;
 };
 
-const criarPacientes = async (nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos) => {
+export const criarPacientes = async (nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos) => {
     return await prisma.Paciente.create({
         data:
         {
@@ -31,7 +30,7 @@ const criarPacientes = async (nomeCompleto, genero, idade, principaisQueixas, us
     });
 };
 
-const atualizarPacietes = async (id, { nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos }) => {
+export const atualizarPacietes = async (id, { nomeCompleto, genero, idade, principaisQueixas, usoDeMedicamentos, objetivoDaTerapia, historicoFamiliar, atendimentos, depoimentos }) => {
     const paciente = await prisma.Paciente.findUnique({
         where: { id }
     });
@@ -44,7 +43,7 @@ const atualizarPacietes = async (id, { nomeCompleto, genero, idade, principaisQu
     });
 };
 
-const excluirPacientes = async (id) => {
+export const excluirPacientes = async (id) => {
     const paciente = await prisma.Paciente.findUnique({
         where: { id }
     });
@@ -56,5 +55,3 @@ const excluirPacientes = async (id) => {
         where: { id }
     });
 };
-
-module.exports = {listarPacientes, buscarPacientesPorId, criarPacientes, atualizarPacietes, excluirPacientes};
