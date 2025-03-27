@@ -5,7 +5,7 @@ export const listarProfissional = async(req, res) => {
         const profissional = await Profissional.listarProfissional();
         req.status(200).json(profissional);
     } catch (error) {
-        res.status(500).json({erro: erro.message || "Erro na hora de listar!"});
+        res.status(500).json({erro: error.message || "Erro na hora de listar!"});
     };
 };
 

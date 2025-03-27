@@ -1,11 +1,11 @@
 import prisma from '../prisma.js'
 
 export const listarProfissional = async () => {
-    return await prisma.Profissional.findMany();
+    return await prisma.profissional.findMany();
 };
 
 export const buscarProfissionalPorId = async (id) => {
-    const profissional = await prisma.Profissional.findUnique({
+    const profissional = await prisma.profissional.findUnique({
         where: { id }
     });
     if (!profissional) {
@@ -15,7 +15,7 @@ export const buscarProfissionalPorId = async (id) => {
 };
 
 export const criarProfissional = async (nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos) => {
-    return await prisma.EvolucaoClinica.create({
+    return await prisma.profissional.create({
         data:
         {
             nomeCompleto, 
@@ -35,27 +35,27 @@ export const criarProfissional = async (nomeCompleto, matricula, genero, bio, fo
 };
 
 export const atualizarProfissional = async (id, { nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos }) => {
-    const profissional = await prisma.Profissional.findUnique({
+    const profissional = await prisma.profissional.findUnique({
         where: { id }
     });
     if (!profissional) {
         throw new Error('Profissional não atualizado...');
     };
-    return await prisma.Profissional.update({
+    return await prisma.profissional.update({
         where: { id },
         data: { nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos }
     });
 };
 
 export const excluirProfissional = async (id) => {
-    const profissional = await prisma.Profissional.findUnique({
+    const profissional = await prisma.profissional.findUnique({
         where: { id }
     });
     if (!profissional) {
         throw new Error('Profissional não excluído...');
     };
 
-    await prisma.Profissional.delete({
+    await prisma.profissional.delete({
         where: { id }
     });
 };
