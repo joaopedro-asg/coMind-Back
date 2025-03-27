@@ -1,4 +1,4 @@
-import { EvolucaoClinica } from "../models/evoluçãoClinicaModel";
+import { EvolucaoClinica } from "../models/evolucaoClinicaModel.js";
 
 export async function createEvolucaoClinica(req, res){
     try {
@@ -9,7 +9,7 @@ export async function createEvolucaoClinica(req, res){
     }
 }
 
-export async function getevolucaoClinica(req, res) {
+export async function getEvolucaoClinica(req, res) {
     try {
         const evolucaoClinica = await EvolucaoClinica.findAll();
             res.json(evolucaoClinica);
@@ -18,7 +18,7 @@ export async function getevolucaoClinica(req, res) {
         }
 }
 
-export async function getevolucaoClinicaById(req, res) {
+export async function getEvolucaoClinicaById(req, res) {
     try {
         const evolucaoClinica = await EvolucaoClinica.findById(Number(req.params.id));
             if (!evolucaoClinica) return res.Status(404).json({ error: 'evolução clinica não encontrada'});
