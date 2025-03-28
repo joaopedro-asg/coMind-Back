@@ -13,10 +13,28 @@ export const buscarPacientesPorId = async (req, res) => {
     try {
         const { id } = req.params;
         const paciente = await Paciente.buscarPacientesPorId(Number(id));
-        res.status(200).json(paciente);
-    } catch (error) {
-        res.status(404).json({error: error.message || "Erro na hora de buscar!"});
-    };
+    
+        if (!paciente) {
+          return res.status(404).json({ error: "Paciente não encontrado" });
+        }
+    
+        const resposta = {
+          id: paciente.id,
+          nome: paciente.usuario.nomeUsario,
+          email: paciente.usuario.email,
+          tipo: paciente.usuario.tipo,
+          ...paciente
+        };
+        delete resposta.usuario;
+    
+        res.status(200).json(resposta);
+      } catch (error) {
+        console.error("ERRO AO BUSCAR PACIENTE:", error);
+        res.status(500).json({ 
+          error: "Erro ao buscar paciente",
+          details: error.message 
+        });
+    }
 };
 
 export const criarPacientes = async(req, res) => {
