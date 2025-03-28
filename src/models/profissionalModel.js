@@ -14,26 +14,31 @@ export const buscarProfissionalPorId = async (id) => {
     return profissional;
 };
 
-export const criarProfissional = async (usuarioID, nomeCompleto, matricula, genero, bio, formacoes, especialidade, faixaEtaria, preco, regiao, foto, diasAtendimento, quantAtendimentosGratuitos, atendimentos, evolucoesClinicas, gruposApoio) => {
+export const criarProfissional = async (data) => {
     return await prisma.profissional.create({
-        data:
-        {
-            usuarioID,
-            nomeCompleto, 
-            matricula, 
-            genero, 
-            bio, 
-            formacoes, 
-            especialidade, 
-            faixaEtaria, 
-            preco, 
-            regiao, 
-            foto, 
-            diasAtendimento, 
-            quantAtendimentosGratuitos,
-            atendimentos,
-            evolucoesClinicas,
-            gruposApoio
+        data: {
+            usuarioID: data.usuarioID,
+            nomeCompleto: data.nomeCompleto,
+            matricula: data.matricula,
+            genero: data.genero,
+            bio: data.bio,
+            formacoes: data.formacoes,
+            especialidade: {
+                set: data.especialidade
+            },
+            faixaEtaria: {
+                set: data.faixaEtaria
+            },
+            preco: Number(data.preco),
+            regiao: data.regiao,
+            foto: data.foto || "",
+            diasAtendimento: {
+                set: data.diasAtendimento
+            },
+            quantAtendimentosGratuitos: Number(data.quantAtendimentosGratuitos),
+            atendimentos: data.atendimentos ? { create: data.atendimentos } : undefined,
+            evolucoesClinicas: data.evolucoesClinicas ? { create: data.evolucoesClinicas } : undefined,
+            gruposApoio: data.gruposApoio ? { create: data.gruposApoio } : undefined
         }
     });
 };
