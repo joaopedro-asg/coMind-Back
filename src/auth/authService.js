@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import prisma from '../prisma.js';
+import * as usuarioModel from '../models/userModel.js';
 
 export const generateToken = (user) => {
   return jwt.sign(
@@ -13,49 +14,41 @@ export const generateToken = (user) => {
 //MARK: - Registro
 export const registrarUsuario = async (req, res) => {
   try {
-    const { nome, email, senha, tipo } = req.body;
+    const { nome, email, senha, tipo = "PACIENTE", ...dadosExtras } = req.body;
 
     if (!nome || !email || !senha) {
-      return res.status(400).json({ error: "Nome, email e senha são obrigatórios." });
+      return res.status(400).json({ error: "Campos obrigatórios faltando" });
     }
 
-    console.log('Verificando usuário existente...');
-    const usuarioExistente = await prisma.usuario.findUnique({
-      where: { email },
-    });
-    if (usuarioExistente) {
-      return res.status(400).json({ error: "Usuário já existe." });
-    }
+    const senhaHash = await bcrypt.hash(senha, 12);
 
-    const senhaHash = await bcrypt.hash(senha, 12); 
-    console.log('Senha hash gerada:', senhaHash);
-
-    const novoUsuario = await prisma.usuario.create({
-      data: {
-        nomeUsario: nome,
-        email,
-        senha: senhaHash,
-        tipo: tipo || "PACIENTE",
-      },
+    const novoUsuario = await usuarioModel.criarUsuario({
+      nomeUsario: nome,
+      email,
+      senha: senhaHash,
+      tipo,
+      ...dadosExtras
     });
 
-    console.log('Novo usuário criado:', novoUsuario);
-
-    res.status(201).json({
-      message: "Usuário registrado com sucesso",
+    const resposta = {
+      success: true,
+      message: "Registro concluído",
       user: {
         id: novoUsuario.id,
-        nomeUsario: novoUsuario.nomeUsario,
+        nome: novoUsuario.nomeUsario,
         email: novoUsuario.email,
-        tipo: novoUsuario.tipo,
-      },
-    });
+        tipo: novoUsuario.tipo
+      }
+    };
+
+    res.status(201).json(resposta);
+
   } catch (error) {
-    console.error("Erro ao registrar usuário:", error);
-    res.status(500).json({ error: error.message || "Erro ao registrar usuário" });
+    console.error("ERRO NO REGISTRO:", error);
+    
+    return res.status(500).json({ error: "Erro interno no servidor." });
   }
 };
-
 
 //MARK: - Autenticar
 export const autenticarUsuario = async (req, res) => {
